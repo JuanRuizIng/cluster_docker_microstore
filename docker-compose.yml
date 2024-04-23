@@ -28,7 +28,7 @@ services:
       - usuarios
       - productos
     ports:
-      - "3007:3007"
+      - "3008:3008"
     networks:
       - cluster_microstore
   microweb:
@@ -40,7 +40,7 @@ services:
       - productos
       - ordenes
     ports:
-      - "1081:80"
+      - "1082:80"
     networks:
       - cluster_microstore
   db:
