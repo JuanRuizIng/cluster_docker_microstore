@@ -1,0 +1,55 @@
+version: '3'
+networks:
+  cluster_microstore:
+services:
+  usuarios:
+    #build: ./usuarios
+    image: juanruizing/docker_microstore-usuarios
+    depends_on:
+      - db
+    ports:
+      - "3005:3005"
+    networks:
+      - cluster_microstore
+  productos:
+    #build: ./productos
+    image: juanruizing/docker_microstore-productos
+    depends_on:
+      - db
+    ports:
+      - "3006:3006"
+    networks:
+      - cluster_microstore
+  ordenes:
+    #build: ./ordenes
+    image: juanruizing/docker_microstore-ordenes
+    depends_on:
+      - db
+      - usuarios
+      - productos
+    ports:
+      - "3007:3007"
+    networks:
+      - cluster_microstore
+  microweb:
+    #build: ./microweb
+    image: juanruizing/docker_microstore-microweb
+    depends_on:
+      - db
+      - usuarios
+      - productos
+      - ordenes
+    ports:
+      - "1081:80"
+    networks:
+      - cluster_microstore
+  db:
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    networks:
+      - cluster_microstore
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
