@@ -9,8 +9,6 @@ services:
       - db
     ports:
       - "3005:3005"
-    networks:
-      - cluster_microstore
   productos:
     #build: ./productos
     image: juanruizing/docker_microstore-productos
@@ -18,8 +16,6 @@ services:
       - db
     ports:
       - "3006:3006"
-    networks:
-      - cluster_microstore
   ordenes:
     #build: ./ordenes
     image: juanruizing/docker_microstore-ordenes
@@ -29,8 +25,6 @@ services:
       - productos
     ports:
       - "3008:3008"
-    networks:
-      - cluster_microstore
   microweb:
     #build: ./microweb
     image: juanruizing/docker_microstore-microweb
@@ -47,8 +41,6 @@ services:
     image: mysql:5.7
     ports:
       - "32000:3306"
-    networks:
-      - cluster_microstore
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
